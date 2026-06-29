@@ -1,0 +1,31 @@
+.git
+.gitignore
+*.pyc
+__pycache__
+.pytest_cache
+.mypy_cache
+*.egg-info
+.eggs
+.env
+.venv
+venv
+**/.venv
+aicybops_env
+*.md
+.cursor
+*.plan.md
+node_modules
+*.log
+.DS_Store
+aicybops-lib/data
+
+# Exclude large runtime data (mounted as volumes; not needed in image)
+aicybops_models/dam_model/mlruns
+# Exclude data files but keep dam_model/data/*.py (data_collector, call_api, etc.)
+aicybops_models/dam_model/data/*.csv
+aicybops_models/dam_model/data/*.txt
+aicybops_models/dam_model/data/drain3_state.bin
+aicybops_models/dam_model/data/deployment.env.example
+aicybops_models/dam_model/data_generation/data
+aicybops_models/dam_model/data_generation/logs
+aicybops_models/dam_model/drain3_state.bin

@@ -1,0 +1,21 @@
+{
+  "templates": {
+    "event_driven": [
+      "templates/event_driven.json"
+    ],
+    "state_driven": [
+      "templates/state_driven.json"
+    ]
+  },
+  "rules": {
+    "event_driven": [
+      "rules/event_driven.json"
+    ],
+    "state_driven": [
+      "rules/state_driven.json"
+    ]
+  },
+  "contexts": [
+    "contexts.json"
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "cpu_usage": {
+    "warn": {
+      "category": "performance_monitoring",
+      "subcategory": "resource_alerts",
+      "level": "WARN",
+      "threshold": 80.0,
+      "persistence_steps": 3,
+      "cooldown_steps": 5,
+      "description": "CPU usage warning threshold exceeded",
+      "causal_relationship": "High CPU usage triggers performance monitoring alerts"
+    },
+    "critical": {
+      "category": "performance_monitoring",
+      "subcategory": "resource_alerts",
+      "level": "ERROR",
+      "threshold": 95.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 10,
+      "description": "CPU usage critical threshold exceeded",
+      "causal_relationship": "Critical CPU usage triggers error-level performance alerts"
+    }
+  },
+  "memory_usage": {
+    "warn": {
+      "category": "performance_monitoring",
+      "subcategory": "resource_alerts",
+      "level": "WARN",
+      "threshold": 85.0,
+      "persistence_steps": 3,
+      "cooldown_steps": 5,
+      "description": "Memory usage warning threshold exceeded",
+      "causal_relationship": "High memory usage triggers performance monitoring alerts"
+    },
+    "critical": {
+      "category": "performance_monitoring",
+      "subcategory": "resource_alerts",
+      "level": "ERROR",
+      "threshold": 95.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 10,
+      "description": "Memory usage critical threshold exceeded",
+      "causal_relationship": "Critical memory usage triggers error-level performance alerts"
+    }
+  },
+  "network_tx": {
+    "high": {
+      "category": "performance_monitoring",
+      "subcategory": "performance_metrics",
+      "level": "INFO",
+      "threshold": 1500.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 3,
+      "description": "High network transmission activity detected",
+      "causal_relationship": "High network TX triggers performance monitoring logs"
+    },
+    "critical": {
+      "category": "performance_monitoring",
+      "subcategory": "resource_alerts",
+      "level": "WARN",
+      "threshold": 2000.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 5,
+      "description": "Critical network transmission activity detected",
+      "causal_relationship": "Critical network TX triggers warning-level performance alerts"
+    }
+  },
+  "network_rx": {
+    "high": {
+      "category": "performance_monitoring",
+      "subcategory": "performance_metrics",
+      "level": "INFO",
+      "threshold": 1500.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 3,
+      "description": "High network reception activity detected",
+      "causal_relationship": "High network RX triggers performance monitoring logs"
+    },
+    "critical": {
+      "category": "performance_monitoring",
+      "subcategory": "resource_alerts",
+      "level": "WARN",
+      "threshold": 2000.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 5,
+      "description": "Critical network reception activity detected",
+      "causal_relationship": "Critical network RX triggers warning-level performance alerts"
+    }
+  },
+  "disk_read": {
+    "high": {
+      "category": "performance_monitoring",
+      "subcategory": "performance_metrics",
+      "level": "INFO",
+      "threshold": 60.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 3,
+      "description": "High disk read activity detected",
+      "causal_relationship": "High disk read activity triggers performance monitoring logs"
+    },
+    "critical": {
+      "category": "performance_monitoring",
+      "subcategory": "resource_alerts",
+      "level": "WARN",
+      "threshold": 80.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 5,
+      "description": "Critical disk read activity detected",
+      "causal_relationship": "Critical disk read activity triggers warning-level performance alerts"
+    }
+  },
+  "disk_write": {
+    "high": {
+      "category": "performance_monitoring",
+      "subcategory": "performance_metrics",
+      "level": "INFO",
+      "threshold": 60.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 3,
+      "description": "High disk write activity detected",
+      "causal_relationship": "High disk write activity triggers performance monitoring logs"
+    },
+    "critical": {
+      "category": "performance_monitoring",
+      "subcategory": "resource_alerts",
+      "level": "WARN",
+      "threshold": 80.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 5,
+      "description": "Critical disk write activity detected",
+      "causal_relationship": "Critical disk write activity triggers warning-level performance alerts"
+    }
+  }
+}

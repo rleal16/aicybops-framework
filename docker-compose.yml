@@ -1,0 +1,229 @@
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: mlflow
+      POSTGRES_PASSWORD: mlflow
+      POSTGRES_DB: mlflow
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mlflow -d mlflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    mem_limit: 2G
+    cpus: "1.0"
+    networks:
+      - mlflow_network
+
+  minio:
+    image: minio/minio:RELEASE.2024-11-07T00-52-20Z
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    expose:
+      - "9000"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    mem_limit: 2G
+    cpus: "1.0"
+    command: server /data --console-address ":9001"
+    networks:
+      - mlflow_network
+
+  minio-bucket:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    environment:
+      AWS_ACCESS_KEY_ID: minio
+      AWS_SECRET_ACCESS_KEY: minio123
+    entrypoint: >
+      /bin/sh -c "
+      sleep 15 &&
+      mc alias set myminio http://minio:9000 minio minio123 &&
+      mc mb myminio/mlflow --ignore-existing &&
+      mc anonymous set download myminio/mlflow"
+    networks:
+      - mlflow_network
+
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow
+    environment:
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      AWS_ACCESS_KEY_ID: minio
+      AWS_SECRET_ACCESS_KEY: minio123
+    command: mlflow server --backend-store-uri postgresql://mlflow:mlflow@postgres:5432/mlflow --default-artifact-root s3://mlflow/ --host 0.0.0.0 --port 5001 --no-serve-artifacts
+    ports:
+      - "5001:5001"
+    mem_limit: 3G
+    cpus: "1.0"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_started
+    networks:
+      - mlflow_network
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    mem_limit: 1G
+    cpus: "0.5"
+    networks:
+      - mlflow_network
+
+  aicybops-service:
+    build:
+      context: .
+      dockerfile: aicybops-service/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./aicybops-lib/data:/app/data
+      - ./aicybops_models/dam_model/configs:/app/aicybops_models/dam_model/configs:ro
+      - ./aicybops_models/dam_model/data_generation/data:/app/aicybops_models/dam_model/data_generation/data
+      - ./aicybops_models/dam_model/data_generation/logs:/app/aicybops_models/dam_model/data_generation/logs
+      - ./aicybops_models/modelos_uc:/app/aicybops_models/modelos_uc:ro
+      - ./aicybops_models/modelos_uc_2:/app/aicybops_models/modelos_uc_2:ro
+      - dam_drain3:/data
+    mem_limit: 8G
+    memswap_limit: 12G
+    cpus: "4.0"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DATA_DIR=/app/data
+      - MLFLOW_TRACKING_URI=http://mlflow:5001
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - AWS_ACCESS_KEY_ID=minio
+      - AWS_SECRET_ACCESS_KEY=minio123
+      - DATA_SOURCE=api
+      - MAIN_DATA_SOURCE=api
+      - LOCAL_DATA_SOURCE=/app/data/
+      - API_URL=${API_URL:-http://host.docker.internal:5010}
+      - DAM_MODEL_NAME=dam
+      - NEXUS_XGB_MODEL_NAME=nexus_xgb
+      - NEXUS_AE_MODEL_NAME=nexus_ae
+      - MODELOS_UC2_MODEL_NAME=modelos_uc2
+      - DAM_CONFIG_PATH=/app/aicybops_models/dam_model/configs/dam_config.json
+      - DAM_API_COLLECT_DIR=/tmp/dam_collected
+      - DAM_DRAIN3_STATE_PATH=/data/drain3_state.bin
+      - JOB_BACKEND=redis
+      - REDIS_URL=redis://redis:6379/0
+      - SERVICE_HOST=0.0.0.0
+      - SERVICE_PORT=8000
+      - OMP_NUM_THREADS=4
+      - MKL_NUM_THREADS=4
+      - OPENBLAS_NUM_THREADS=4
+      - NUMEXPR_NUM_THREADS=4
+      - TORCH_NUM_THREADS=4
+      - TORCH_NUM_INTEROP_THREADS=2
+      - AICYBOPS_DATALOADER_NUM_WORKERS=2
+      # CPU-only deployment (code supports GPU via DAM_DEVICE=cuda on a GPU image).
+      - AICYBOPS_TORCH_VARIANT=cpu
+      - DAM_DEVICE=cpu
+      - TORCHDYNAMO_DISABLE=1
+      - TORCH_COMPILE_DISABLE=1
+      - PYTORCH_DISABLE_AOT_AUTOGRAD=1
+      - CUDA_VISIBLE_DEVICES=
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      mlflow:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - mlflow_network
+
+  aicybops-worker:
+    build:
+      context: .
+      dockerfile: aicybops-service/Dockerfile
+    command: ["python", "worker.py"]
+    restart: unless-stopped
+    volumes:
+      - ./aicybops-lib/data:/app/data
+      - ./aicybops_models/dam_model/configs:/app/aicybops_models/dam_model/configs:ro
+      - ./aicybops_models/dam_model/data_generation/data:/app/aicybops_models/dam_model/data_generation/data
+      - ./aicybops_models/dam_model/data_generation/logs:/app/aicybops_models/dam_model/data_generation/logs
+      - ./aicybops_models/modelos_uc:/app/aicybops_models/modelos_uc:ro
+      - ./aicybops_models/modelos_uc_2:/app/aicybops_models/modelos_uc_2:ro
+      - dam_drain3:/data
+    mem_limit: 16G
+    memswap_limit: 20G
+    cpus: "4.0"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MALLOC_ARENA_MAX=2
+      - DAM_MAX_TIMESTEPS=900
+      - TF_CPP_MIN_LOG_LEVEL=2
+      - DATA_DIR=/app/data
+      - MLFLOW_TRACKING_URI=http://mlflow:5001
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - AWS_ACCESS_KEY_ID=minio
+      - AWS_SECRET_ACCESS_KEY=minio123
+      - DATA_SOURCE=api
+      - MAIN_DATA_SOURCE=api
+      - LOCAL_DATA_SOURCE=/app/data/
+      - API_URL=${API_URL:-http://host.docker.internal:5010}
+      - DAM_MODEL_NAME=dam
+      - NEXUS_XGB_MODEL_NAME=nexus_xgb
+      - NEXUS_AE_MODEL_NAME=nexus_ae
+      - MODELOS_UC2_MODEL_NAME=modelos_uc2
+      - DAM_CONFIG_PATH=/app/aicybops_models/dam_model/configs/dam_config.json
+      - DAM_API_COLLECT_DIR=/tmp/dam_collected
+      - DAM_DRAIN3_STATE_PATH=/data/drain3_state.bin
+      - JOB_BACKEND=redis
+      - REDIS_URL=redis://redis:6379/0
+      - OMP_NUM_THREADS=4
+      - MKL_NUM_THREADS=4
+      - OPENBLAS_NUM_THREADS=4
+      - NUMEXPR_NUM_THREADS=4
+      - TORCH_NUM_THREADS=4
+      - TORCH_NUM_INTEROP_THREADS=2
+      - AICYBOPS_DATALOADER_NUM_WORKERS=0
+      # CPU-only deployment (code supports GPU via DAM_DEVICE=cuda on a GPU image).
+      - AICYBOPS_TORCH_VARIANT=cpu
+      - DAM_DEVICE=cpu
+      - TORCHDYNAMO_DISABLE=1
+      - TORCH_COMPILE_DISABLE=1
+      - PYTORCH_DISABLE_AOT_AUTOGRAD=1
+      - CUDA_VISIBLE_DEVICES=
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      mlflow:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - mlflow_network
+
+volumes:
+  postgres_data:
+  minio_data:
+  dam_drain3:
+  redis_data:
+
+networks:
+  mlflow_network:
+    driver: bridge

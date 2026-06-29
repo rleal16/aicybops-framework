@@ -1,0 +1,96 @@
+{
+  "description": "DAM Model Configuration - Training and Evaluation",
+  "data_paths": {
+    "description": "Paths to data files for DAM model training and evaluation",
+    "metrics_csv": "../data_generation/data/generated/metrics.csv",
+    "log_file": "../data_generation/logs/logs.txt",
+    "labels_csv": "../data_generation/data/generated/anomaly_labels.csv"
+  },
+  "model_paths": {
+    "description": "Paths for model storage and loading",
+    "model_dir": "models",
+    "default_model": "models/dam_model.pth"
+  },
+  "model_architecture": {
+    "description": "Model architecture hyperparameters",
+    "lstm_hidden_dim": 32,
+    "window_size": 10,
+    "stride": 1,
+    "align_freq": "1s"
+  },
+  "training": {
+    "description": "Training hyperparameters",
+    "learning_rate": 0.0001,
+    "batch_size": 32,
+    "num_epochs": 10,
+    "train_ratio": 0.8,
+    "val_ratio": 0.2,
+    "early_stopping": {
+      "enabled": true,
+      "patience": 15,
+      "min_delta": 0.02,
+      "mode": "min"
+    }
+  },
+  "anomaly_detection": {
+    "description": "Anomaly detection (EVT/SPOT) parameters",
+    "spot_type": "dSPOT",
+    "risk_level": 1e-3,
+    "depth": 10,
+    "init_quantile": 0.95
+  },
+  "data_processing": {
+    "description": "Configuration for processing metrics and logs for DAM model",
+    "sequence_index": "_time",
+    "timestamp_format": "unix_ms",
+    "metric_groups": {
+      "load_metrics": {
+        "description": "CPU, memory, and disk I/O metrics for load monitoring. Maps to DAM load_metrics input.",
+        "group_name": "load",
+        "csv_mapping": {
+          "cpu": {
+            "_measurement": "docker_container_cpu",
+            "value_column": "usage_total"
+          },
+          "memory": {
+            "_measurement": "docker_container_mem",
+            "value_column": "usage"
+          },
+          "disk_read": {
+            "_measurement": "docker_container_blkio",
+            "value_column": "io_service_bytes_recursive_read"
+          },
+          "disk_write": {
+            "_measurement": "docker_container_blkio",
+            "value_column": "io_service_bytes_recursive_write"
+          }
+        }
+      },
+      "traffic_metrics": {
+        "description": "Network traffic metrics. Maps to DAM traffic_metrics input.",
+        "group_name": "traffic",
+        "csv_mapping": {
+          "network": {
+            "_measurement": "docker_container_net",
+            "value_column": "rx_bytes"
+          }
+        }
+      }
+    },
+    "log_groups": {
+      "log": {
+        "description": "Log template metrics. Maps to DAM log_metrics input.",
+        "group_name": "log",
+        "columns": ["log_template"]
+      }
+    }
+  },
+  "label_dataset": {
+    "description": "Configuration for loading anomaly labels for evaluation",
+    "enabled": true,
+    "path": "../data_generation/data/generated/anomaly_labels.csv",
+    "timestamp_column": "_time",
+    "label_column": "anomaly_label",
+    "timestamp_format": "unix_ms"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "http_operations": {
+    "request_received": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {method} {endpoint} from {client_ip}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Processing {method} request to {endpoint}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Incoming {method} {endpoint} - User: {user_id}"
+    ],
+    "response_sent": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {method} {endpoint} - Response: {status_code} in {duration}ms",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {endpoint} completed with status {status_code}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Response sent for {method} {endpoint} - {status_code}"
+    ]
+  },
+  "database_operations": {
+    "query_execution": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Executing {query_type} query: {table_name}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Database query: {query_type} on {table_name} - {rows_affected} rows",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {query_type} operation on {table_name} completed in {duration}ms"
+    ],
+    "connection_management": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Database connection established - Pool: {pool_size}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : DB connection pool status: {active_connection}/{max_connection}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Connection released to pool - Available: {available_connection}"
+    ]
+  },
+  "business_logic": {
+    "order_processing": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Order created: {order_id} - User: {user_id}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Order {order_id} status changed to {status}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Processing order {order_id} - Amount: {amount}"
+    ],
+    "payment_processing": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Payment initiated: {payment_id} - Amount: {amount}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Payment {payment_id} {payment_result} - Amount: {amount}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Payment processing: {payment_id} - Method: {payment_method}"
+    ]
+  }
+}

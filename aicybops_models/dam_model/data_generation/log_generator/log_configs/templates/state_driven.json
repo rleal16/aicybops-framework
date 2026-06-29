@@ -1,0 +1,67 @@
+{
+  "performance_monitoring": {
+    "resource_alerts": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : High {metric} usage detected: {value}%",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {metric} threshold exceeded: {value}% (threshold: {threshold}%)",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : System {metric} at {value}% - {status}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {metric} usage critical: {value}% - {status}"
+    ],
+    "performance_metrics": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {metric} monitoring: {value}% - {trend}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Performance check: {metric} = {value}%",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {metric} reading: {value}% (normal range: {normal_range})",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : System {metric}: {value}% - Status: {status}"
+    ],
+    "gc_events": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : GC event: {gc_type} - Duration: {duration}ms, Freed: {freed_memory}MB",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Garbage collection: {gc_type} - {duration}ms, Memory freed: {freed_memory}MB",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {gc_type} GC completed in {duration}ms - Freed {freed_memory}MB"
+    ],
+    "system_health": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : System health check: {health_status}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Service {service_name} health: {health_status}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Health monitoring: {component} - {status}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : System status: {overall_status} - {detail}"
+    ]
+  },
+  "error_handling": {
+    "application_errors": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Error processing request: {error_type}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Exception in {component}: {error_message}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Failed to {operation}: {error_detail}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {error_type} in {component}: {error_message}"
+    ],
+    "system_errors": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : System error: {error_type} - {error_message}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Critical error in {service}: {error_detail}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Fatal error: {error_type} - Service may be unstable",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : System failure: {error_type} in {component}"
+    ],
+    "connection_errors": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Failed to connect to {service}: {error_message}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Connection timeout to {service}: {timeout_duration}ms",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {service} connection failed: {error_type}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Unable to connect to {service}: {error_detail}"
+    ]
+  },
+  "security_events": {
+    "authentication": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : User authentication: {user_id} - {auth_result}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Login attempt: {user_id} from {client_ip} - {result}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Authentication {auth_result} for user {user_id}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : User {user_id} {auth_result} from {client_ip}"
+    ],
+    "authorization": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Access {access_result}: {user_id} to {resource}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Authorization {auth_result} for {user_id} - {resource}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {user_id} {access_result} access to {resource}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Permission {permission_result} for {user_id} - {resource}"
+    ],
+    "security_violations": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Security violation: {violation_type} from {client_ip}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Suspicious activity: {activity_type} - IP: {client_ip}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Security alert: {alert_type} - Source: {client_ip}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {violation_type} detected from {client_ip} - {detail}"
+    ]
+  }
+}

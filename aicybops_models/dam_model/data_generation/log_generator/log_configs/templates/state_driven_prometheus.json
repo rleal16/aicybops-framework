@@ -1,0 +1,19 @@
+{
+  "performance_monitoring": {
+    "resource_alerts": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : High {metric} value detected: {value} (threshold: {threshold})",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {metric} threshold exceeded: {value} exceeds threshold {threshold}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Container {service_name} {metric} at {value} - {status}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {metric} value critical: {value} (threshold: {threshold}) - {status}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Alert: {metric} = {value} for container {service_name} (threshold: {threshold})"
+    ],
+    "performance_metrics": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {metric} monitoring: {value} - {trend}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Performance check: {metric} = {value} for {service_name}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {metric} reading: {value} for container {service_name}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Container {service_name} {metric}: {value} - Status: {status}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Metric {metric} = {value} on {service_name} - {status}"
+    ]
+  }
+}
+

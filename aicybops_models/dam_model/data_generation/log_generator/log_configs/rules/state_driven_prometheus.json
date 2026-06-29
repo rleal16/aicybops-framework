@@ -1,0 +1,47 @@
+{
+  "counter": {
+    "high": {
+      "category": "performance_monitoring",
+      "subcategory": "performance_metrics",
+      "level": "INFO",
+      "threshold": 100000000.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 3,
+      "description": "High counter value detected",
+      "causal_relationship": "High counter values indicate increased container activity"
+    },
+    "critical": {
+      "category": "performance_monitoring",
+      "subcategory": "resource_alerts",
+      "level": "WARN",
+      "threshold": 1000000000.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 5,
+      "description": "Critical counter value detected",
+      "causal_relationship": "Critical counter values trigger warning-level performance alerts"
+    }
+  },
+  "gauge": {
+    "warn": {
+      "category": "performance_monitoring",
+      "subcategory": "resource_alerts",
+      "level": "WARN",
+      "threshold": 1000000000.0,
+      "persistence_steps": 3,
+      "cooldown_steps": 5,
+      "description": "Gauge value warning threshold exceeded",
+      "causal_relationship": "High gauge values trigger performance monitoring alerts"
+    },
+    "critical": {
+      "category": "performance_monitoring",
+      "subcategory": "resource_alerts",
+      "level": "ERROR",
+      "threshold": 5000000000.0,
+      "persistence_steps": 2,
+      "cooldown_steps": 10,
+      "description": "Gauge value critical threshold exceeded",
+      "causal_relationship": "Critical gauge values trigger error-level performance alerts"
+    }
+  }
+}
+

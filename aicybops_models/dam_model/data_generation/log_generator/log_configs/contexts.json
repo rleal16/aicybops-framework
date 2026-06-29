@@ -1,0 +1,149 @@
+{
+  "common_log_fields": {
+    "level": ["DEBUG", "INFO", "WARN", "WARNING", "ERROR", "FATAL", "CRITICAL"],
+    "pid": [1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010],
+    "thread": [
+      "io-1001-exec-1", "io-1002-exec-2", "io-1003-exec-3", "io-1004-exec-4", "io-1005-exec-5",
+      "io-1006-exec-6", "io-1007-exec-7", "io-1008-exec-8", "io-1009-exec-9", "io-1010-exec-10"
+    ],
+    "logger": [
+      "com.example.service", "com.example.controller", "com.example.repository",
+      "com.example.service.UserService", "com.example.service.OrderService", "com.example.service.PaymentService"
+    ]
+  },
+  "http_operations": {
+    "method": ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    "endpoint": [
+      "/api/users", "/api/orders", "/api/products", "/api/payments",
+      "/api/auth", "/api/health", "/api/metrics", "/api/logs", "/api/admin"
+    ],
+    "client_ip": [
+      "192.168.1.100", "192.168.1.101", "192.168.1.102", "10.0.0.50",
+      "10.0.0.51", "172.16.0.10", "172.16.0.11", "203.0.113.1"
+    ],
+    "status_code": [200, 201, 400, 401, 403, 404, 500, 502, 503],
+    "duration": [45, 67, 89, 123, 156, 189, 234, 267, 289, 312, 345, 378, 401, 434, 467]
+  },
+  "database_operations": {
+    "query_type": ["SELECT", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"],
+    "table_name": [
+      "users", "orders", "products", "payments", "sessions",
+      "logs", "metrics", "configurations", "audit_trail"
+    ],
+    "rows_affected": [0, 1, 5, 10, 25, 50, 100, 250, 500, 1000],
+    "pool_size": [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+    "active_connection": [2, 5, 8, 12, 15, 18, 22, 25, 28, 32],
+    "max_connection": [20, 25, 30, 35, 40, 45, 50, 55, 60, 65],
+    "available_connection": [15, 18, 20, 22, 25, 28, 30, 32, 35, 38]
+  },
+  "business_logic": {
+    "user_id": [
+      "user_001", "user_002", "user_003", "user_004", "user_005",
+      "user_006", "user_007", "user_008", "user_009", "user_010"
+    ],
+    "order_id": [
+      "ord_001", "ord_002", "ord_003", "ord_004", "ord_005",
+      "ord_006", "ord_007", "ord_008", "ord_009", "ord_010"
+    ],
+    "payment_id": [
+      "pay_001", "pay_002", "pay_003", "pay_004", "pay_005",
+      "pay_006", "pay_007", "pay_008", "pay_009", "pay_010"
+    ],
+    "order_status": ["pending", "processing", "shipped", "delivered", "cancelled"],
+    "payment_method": ["credit_card", "debit_card", "paypal", "bank_transfer", "crypto"],
+    "payment_result": ["successful", "failed", "pending", "cancelled"],
+    "amount": [10.50, 25.99, 49.99, 99.99, 149.99, 199.99, 299.99, 499.99, 999.99]
+  },
+  "performance_monitoring": {
+    "metric": ["cpu_usage", "memory_usage", "network_tx", "network_rx", "disk_read", "disk_write"],
+    "trend": ["increasing", "decreasing", "stable", "volatile", "spiking"],
+    "normal_range": {
+      "cpu_usage": "0-80%",
+      "memory_usage": "0-85%",
+      "network_tx": "0-1500 bytes/s",
+      "network_rx": "0-1500 bytes/s",
+      "disk_read": "0-60 MB/s",
+      "disk_write": "0-60 MB/s"
+    },
+    "status": ["normal", "warning", "critical", "recovering"],
+    "gc_type": ["Minor", "Major", "Full", "Concurrent"],
+    "freed_memory": [10, 25, 50, 75, 100, 150, 200, 250, 300, 400, 500],
+    "health_status": ["healthy", "degraded", "unhealthy", "unknown"],
+    "component": [
+      "database", "cache", "message_queue", "file_system",
+      "network_interface", "memory_manager", "cpu_scheduler"
+    ],
+    "service_name": [
+      "user-service", "order-service", "payment-service", "notification-service",
+      "auth-service", "inventory-service", "shipping-service", "analytics-service"
+    ],
+    "overall_status": ["operational", "degraded", "critical", "maintenance"],
+    "detail": [
+      "All systems operational", "Minor performance degradation", "High load detected",
+      "Memory pressure increasing", "Network latency elevated", "Disk I/O bottleneck"
+    ]
+  },
+  "error_handling": {
+    "error_type": [
+      "ValidationError", "AuthenticationError", "AuthorizationError",
+      "DatabaseError", "NetworkError", "TimeoutError", "InternalError"
+    ],
+    "error_message": [
+      "Invalid input parameters", "Authentication failed", "Access denied",
+      "Database connection lost", "Network timeout", "Service unavailable"
+    ],
+    "operation": [
+      "user_login", "order_creation", "payment_processing", "data_retrieval",
+      "file_upload", "email_sending", "report_generation", "backup_creation"
+    ],
+    "component": [
+      "auth_service", "payment_gateway", "database_connection", "file_storage",
+      "email_service", "notification_service", "cache_layer", "api_gateway"
+    ],
+    "service": [
+      "user-service", "order-service", "payment-service", "notification-service",
+      "auth-service", "inventory-service", "shipping-service", "analytics-service"
+    ],
+    "error_detail": [
+      "Connection pool exhausted", "Query timeout exceeded", "Invalid credentials",
+      "Resource not found", "Permission denied", "Service overloaded"
+    ],
+    "timeout_duration": [5000, 10000, 15000, 30000, 60000, 120000]
+  },
+  "security_events": {
+    "auth_result": ["successful", "failed", "blocked", "expired"],
+    "result": ["successful", "failed", "blocked", "expired"],
+    "access_result": ["granted", "denied", "blocked", "expired"],
+    "resource": [
+      "/api/admin", "/api/users", "/api/orders", "/api/payments",
+      "/api/config", "/api/logs", "/api/metrics", "/api/health"
+    ],
+    "permission_result": ["granted", "denied", "insufficient", "expired"],
+    "violation_type": [
+      "SQL injection attempt", "XSS attack", "Brute force attack",
+      "Unauthorized access", "Rate limit exceeded", "Suspicious pattern"
+    ],
+    "activity_type": [
+      "Multiple failed logins", "Unusual access pattern", "High request volume",
+      "Suspicious IP", "Invalid credentials", "Session hijacking attempt"
+    ],
+    "alert_type": [
+      "Security breach", "Anomaly detected", "Threat identified",
+      "Policy violation", "System compromise", "Data exfiltration"
+    ]
+  },
+  "container_operations": {
+    "metric": [
+      "container_cpu_usage_seconds_total",
+      "container_memory_working_set_bytes",
+      "container_blkio_device_usage_total",
+      "container_network_receive_bytes_total",
+      "container_network_transmit_bytes_total",
+      "container_fs_reads_bytes_total",
+      "container_fs_writes_bytes_total",
+      "container_memory_failures_total",
+      "container_tasks_state",
+      "container_fs_usage_bytes"
+    ]
+  }
+}

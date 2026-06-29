@@ -1,0 +1,22 @@
+{
+  "templates": {
+    "event_driven": [
+      "templates/event_driven_prometheus.json"
+    ],
+    "state_driven": [
+      "templates/state_driven_prometheus.json"
+    ]
+  },
+  "rules": {
+    "event_driven": [
+      "rules/event_driven_prometheus.json"
+    ],
+    "state_driven": [
+      "rules/state_driven_prometheus.json"
+    ]
+  },
+  "contexts": [
+    "contexts.json"
+  ]
+}
+

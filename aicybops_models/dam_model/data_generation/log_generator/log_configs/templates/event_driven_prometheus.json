@@ -1,0 +1,15 @@
+{
+  "performance_monitoring": {
+    "performance_metrics": [
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Container metric collected: {metric} = {value}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Monitoring {metric}: {value} for container {service_name}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Container {service_name} metric update: {metric} = {value}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {metric} activity detected: {value} on {service_name}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Container state check: {metric} = {value}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : {service_name} state monitoring: {metric} = {value}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : Container {service_name} current state: {metric} = {value}",
+      "{timestamp} {level} {pid} --- [{thread}] {logger} : State metric {metric}: {value} for {service_name}"
+    ]
+  }
+}
+

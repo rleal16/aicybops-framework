@@ -1,0 +1,21 @@
+{
+  "counter": {
+    "category": "performance_monitoring",
+    "subcategory": "performance_metrics",
+    "rate_factor": 0.0000001,
+    "min_logs": 0,
+    "max_logs": 3,
+    "description": "Counter metrics generate container operation logs",
+    "causal_relationship": "Counter increments reflect container activity"
+  },
+  "gauge": {
+    "category": "performance_monitoring",
+    "subcategory": "performance_metrics",
+    "rate_factor": 0.0000001,
+    "min_logs": 0,
+    "max_logs": 3,
+    "description": "Gauge metrics generate container state monitoring logs",
+    "causal_relationship": "Gauge values reflect current container state"
+  }
+}
+

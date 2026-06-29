@@ -1,0 +1,38 @@
+{
+  "network_tx": {
+    "category": "http_operations",
+    "subcategory": "response_sent",
+    "rate_factor": 0.01,
+    "min_logs": 0,
+    "max_logs": 5,
+    "description": "High network transmission generates HTTP response logs",
+    "causal_relationship": "Network TX is the result of sending HTTP responses"
+  },
+  "network_rx": {
+    "category": "http_operations",
+    "subcategory": "request_received",
+    "rate_factor": 0.008,
+    "min_logs": 0,
+    "max_logs": 5,
+    "description": "High network reception generates HTTP request logs",
+    "causal_relationship": "Network RX is the result of receiving HTTP requests"
+  },
+  "disk_read": {
+    "category": "database_operations",
+    "subcategory": "query_execution",
+    "rate_factor": 0.005,
+    "min_logs": 0,
+    "max_logs": 3,
+    "description": "High disk read activity generates database query logs",
+    "causal_relationship": "Disk read activity is caused by database query execution"
+  },
+  "disk_write": {
+    "category": "database_operations",
+    "subcategory": "query_execution",
+    "rate_factor": 0.005,
+    "min_logs": 0,
+    "max_logs": 3,
+    "description": "High disk write activity generates database query logs",
+    "causal_relationship": "Disk write activity is caused by database query execution"
+  }
+}

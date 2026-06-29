@@ -1,0 +1,128 @@
+{
+  "paths": {
+    "data_path": "data/seed/main_test.csv",
+    "output_paths": {
+      "generated_metrics": "data/generated/metrics.csv",
+      "generated_logs": "logs/logs.txt",
+      "model": "models/generator_model.pth"
+    }
+  },
+  "model_training": {
+    "description": "Configuration for training the PARModel generator",
+    "epochs": 10,
+    "segment_size": 200,
+    "entity_columns": ["id"],
+    "sequence_index": "_time",
+    "timestamp_format": "unix_ms",
+    "auto_detect_data_types": true,
+    "data_types": {
+      "_measurement": "categorical",
+      "id": "categorical",
+      "host": "categorical",
+      "counter": "continuous",
+      "gauge": "continuous",
+      "cpu": "continuous",
+      "device": "categorical",
+      "major": "continuous",
+      "minor": "continuous",
+      "operation": "categorical",
+      "interface": "categorical",
+      "scope": "categorical",
+      "state": "categorical"
+    }
+  },
+  "metrics_generation": {
+    "description": "Configuration for generating synthetic metrics data",
+    "num_entities": 50,
+    "start_date": "2025-01-01T00:00:00",
+    "all_columns": [
+      "_time",
+      "_measurement",
+      "id",
+      "host",
+      "counter",
+      "gauge",
+      "cpu",
+      "device",
+      "major",
+      "minor",
+      "operation",
+      "interface",
+      "scope",
+      "state"
+    ],
+    "column_descriptions": {
+      "_time": "Timestamp in Unix milliseconds. Sequence index for time-series ordering.",
+      "_measurement": "Metric type identifier (e.g., 'container_cpu_usage_seconds_total', 'container_memory_working_set_bytes').",
+      "id": "Cgroup path identifier (e.g., '/kubepods.slice', '/init.scope'). Identifies container/pod/service entity for grouping sequences.",
+      "host": "Hostname where metric was collected (e.g., 'telegraf-4pgwh').",
+      "counter": "Cumulative metric value for CPU, network, and block I/O metrics.",
+      "gauge": "Current metric value for memory metrics (e.g., container_memory_working_set_bytes).",
+      "cpu": "Alternative CPU metric value column (if populated).",
+      "device": "Block device identifier for blkio metrics (e.g., '/dev/dm-0').",
+      "major": "Linux device major number. Used with 'minor' to identify block devices.",
+      "minor": "Linux device minor number. Used with 'major' to identify block devices.",
+      "operation": "I/O operation type: 'Read' or 'Write' (for blkio metrics).",
+      "interface": "Network interface name (e.g., 'datapath', 'ens192') for network metrics.",
+      "scope": "Systemd scope identifier. May be empty for some metrics.",
+      "state": "State information. May be empty for some metrics."
+    },
+    "metric_groups": {
+      "load_metrics": {
+        "description": "CPU, memory, and disk I/O metrics for load monitoring. Maps to DAM load_metrics input.",
+        "group_name": "load",
+        "csv_mapping": {
+          "cpu": {
+            "_measurement": "docker_container_cpu",
+            "value_column": "usage_total"
+          },
+          "memory": {
+            "_measurement": "docker_container_mem",
+            "value_column": "usage"
+          },
+          "disk_read": {
+            "_measurement": "docker_container_blkio",
+            "value_column": "io_service_bytes_recursive_read"
+          },
+          "disk_write": {
+            "_measurement": "docker_container_blkio",
+            "value_column": "io_service_bytes_recursive_write"
+          }
+        }
+      },
+      "traffic_metrics": {
+        "description": "Network traffic metrics. Maps to DAM traffic_metrics input.",
+        "group_name": "traffic",
+        "csv_mapping": {
+          "network": {
+            "_measurement": "docker_container_net",
+            "value_column": "rx_bytes"
+          }
+        }
+      }
+    }
+  },
+  "log_generation": {
+    "description": "Configuration for generating logs from metrics",
+    "log_generator_config_path": "../log_generator/log_configs/root_config_prometheus.json",
+    "log_groups": {
+      "log": {
+        "description": "Log template metrics. Maps to DAM log_metrics input.",
+        "group_name": "log",
+        "columns": ["log_template"]
+      }
+    }
+  },
+  "label_generation": {
+    "description": "Configuration for generating anomaly labels for testing",
+    "enabled": true,
+    "path": "data/generated/anomaly_labels.csv",
+    "timestamp_column": "_time",
+    "label_column": "anomaly_label",
+    "timestamp_format": "unix_ms",
+    "anomaly_ratio": 0.3,
+    "min_cluster_size": 5,
+    "max_cluster_size": 20,
+    "random_seed": 42
+  }
+}

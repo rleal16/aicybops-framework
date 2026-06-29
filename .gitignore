@@ -1,0 +1,125 @@
+# System files
+*.DS_Store
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+eggs/
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# MLflow and Minio artifacts
+mlruns/
+mlflow/
+.minio.sys/
+
+# Logs
+logs/
+*.log
+
+# Data files
+data/
+**/data/
+data/temp/
+data/intermediate/
+main_tests_api/
+data/*.csv
+!data/main_test.csv
+
+# Ignore all CSV, TXT, and LOG files
+*.csv
+*.txt
+*.log
+!aicybops_models/modelos_uc/*.csv
+
+# Model files
+*.pth
+*.pt
+*.pkl
+*.joblib
+*.h5
+*.ckpt
+model_*.bin
+
+# Model specific
+evaluation_results/
+results/
+processed_logs_*.json
+deploy_run_*.json
+deploy_modelos_uc_run_*.json
+deploy_uc2_run_*.json
+template_distribution.png
+aicybops_models/dam_model/models/
+
+# Temporary files
+*.tmp
+
+# Plots and figures
+*.png
+*.jpg
+*.jpeg
+*.svg
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Project directories
+.github/
+info/
+
+# Ignore drain3 state files
+drain3_state*.bin
+
+# Ignore any directory starting with .
+.*/
+
+# Docker / aicybops-service: seed data must be in the repo (Dockerfile COPY aicybops-service/data)
+# (overrides **/data/ and *.csv above — patterns are last-match wins for un-ignore)
+!aicybops-service/data/
+!aicybops-service/data/main_test.csv
+
+# dam_model/data is a Python package (DataCollector, API client). **/data/ above must not omit it from clones/Docker builds.
+!aicybops_models/dam_model/data/
+!aicybops_models/dam_model/data/**/*.py
+!aicybops_models/dam_model/data/deployment.env.example
+
+# DAM synthetic-data generator seed (offline train/eval without live monitoring stack).
+!aicybops_models/dam_model/data_generation/data/
+!aicybops_models/dam_model/data_generation/data/seed/
+!aicybops_models/dam_model/data_generation/data/seed/main_test.csv
+
+# modelos_uc_2 raw archives are optional inputs and exceed GitHub limits.
+aicybops_models/modelos_uc_2/sysdig-initial.dat.zip
+aicybops_models/modelos_uc_2/sysdig.dat.zip
+
+
+# Keep only required small data files in git so Docker/compose mounts include them.
+!aicybops_models/modelos_uc_2/data/
+!aicybops_models/modelos_uc_2/data/dataset_BoSC.dat
+!aicybops_models/modelos_uc_2/data/dictionary.dat
+aicybops_models/modelos_uc_2/data/encoded_dataset.dat
+aicybops_models/modelos_uc_2/data/sysdig.dat

@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aicybops_lib"
+version = "0.1.0"
+dependencies = [
+    "torch",
+    "scikit-learn",
+    "mlflow",
+    "fastapi",
+    "uvicorn",
+    "pandas",
+    "numpy<2",
+    "evidently",
+    "prometheus_client",
+    "shap",
+    "lime",
+    "adversarial-robustness-toolbox",
+    "requests",
+    "httpx",
+    "boto3",
+    "minio",
+    "psycopg2-binary",
+    "protobuf<5.0.0",
+    "importlib-metadata<8.0",
+    "pyarrow<16"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-mock"
+] 
